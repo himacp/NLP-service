@@ -194,6 +194,7 @@ public class NlpServiceImpl implements NlpService {
         }
         System.out.println("concept name list");
         System.out.println(conceptNameList);
+        produceMsg(conceptName);
         return conceptNameList;
     }
 
