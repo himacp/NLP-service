@@ -169,21 +169,31 @@ public class NlpServiceImpl implements NlpService {
                 conceptNameList.add(domainSpecificTopics.get(i).toLowerCase());
                 //log.info(domainSpecificTopics.get(i).toLowerCase());
             } else {
-                pattenString = getLemmitizedWord(domainSpecificTopics.get(i).toLowerCase());
+                String originalDomainName = domainSpecificTopics.get(i).toLowerCase();
+                String modifiedDomainName = originalDomainName.replaceAll(" ", "");
+                pattenString = modifiedDomainName;
                 pattern = Pattern.compile(pattenString);
                 matcher = pattern.matcher(sentenceWithoutStopWords.toLowerCase());
                 if (matcher.find()) {
                     conceptNameList.add(domainSpecificTopics.get(i).toLowerCase());
                     //log.info(domainSpecificTopics.get(i).toLowerCase());
                 } else {
-                    String originalDomainName = domainSpecificTopics.get(i).toLowerCase();
-                    String modifiedDomainName = originalDomainName.replaceAll(" ", "");
-                    pattenString = modifiedDomainName;
+                    pattenString = getLemmitizedWord(domainSpecificTopics.get(i).toLowerCase());
                     pattern = Pattern.compile(pattenString);
                     matcher = pattern.matcher(sentenceWithoutStopWords.toLowerCase());
                     if (matcher.find()) {
                         conceptNameList.add(domainSpecificTopics.get(i).toLowerCase());
                         //log.info(domainSpecificTopics.get(i).toLowerCase());
+                    } else {
+                        originalDomainName = domainSpecificTopics.get(i).toLowerCase();
+                        modifiedDomainName = getLemmitizedWord(originalDomainName.replaceAll(" ", ""));
+                        pattenString = modifiedDomainName;
+                        pattern = Pattern.compile(pattenString);
+                        matcher = pattern.matcher(sentenceWithoutStopWords.toLowerCase());
+                        if (matcher.find()) {
+                            conceptNameList.add(domainSpecificTopics.get(i).toLowerCase());
+                            //log.info(domainSpecificTopics.get(i).toLowerCase());
+                        }
                     }
                 }
             }
